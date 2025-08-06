@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>セリフ選択UIモック</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Yu Gothic', sans-serif;
+      background-color: black;
+    }
+
+    .game-ui {
+      position: relative;
+      width: 800px;
+      height: 450px;
+      margin: 50px auto;
+      border: 2px solid #444;
+      overflow: hidden;
+    }
+
+    .bg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .dialogue-box {
+      position: absolute;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.3);
+      color: #fff;
+      width: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .serif {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .choices {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .choices li {
+      background: #333;
+      margin-bottom: 8px;
+      padding: 10px 15px;
+      border-radius: 5px;
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+
+    .choices li:hover {
+      background: #555;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-ui">
+    <img src="images/background.jpg" class="bg" alt="背景画像" id="background" />
+    <button class="back-button" id="back-button" onclick="history.back()">← 戻る</button>
+    <div class="dialogue-box">
+      <p class="serif" id="serif-text">「この道を進めば、もう戻れません。どうしますか？」</p>
+      <ul class="choices" id="choices">
+        <li onclick="changeScenario('進む')">▶ 進む</li>
+        <li onclick="changeScenario('引き返す')">▶ 引き返す</li>
+        <li onclick="changeScenario('少し考える')">▶ 少し考える</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const scenarios = {
+      開始: {
+        bg: "images/background.jpg",
+        text: "「この道を進めば、もう戻れません。どうしますか？」",
+        choices: ["▶ 進む", "▶ 引き返す", "▶ 少し考える"]
+      },
+      進む: {
+        bg: "images/yamakiri.jpg",
+        text: "霧の向こうに、小さな光が……誰かいる？",
+        choices: ["▶ 声をかける", "▶ 隠れる", "▶ 近づく"]
+      },
+      引き返す: {
+        bg: "images/forest-entrance.jpg",
+        text: "あれ？こんな場所、あったっけ……？",
+        choices: ["▶ 道を探す", "▶ 誰かを呼ぶ", "▶立ち止まる "]
+      },
+      少し考える: {
+        bg: "images/thinking.jpg",
+        text: "冷たい風が、どこか遠くから吹いてくる。",
+        choices: ["▶ 進む", "▶ 引き返す"]
+      },
+      声をかける: {
+        bg: "images/light.jpg",
+        text: "「……誰かいるの？」人影が現れた",
+        choices: ["▶ 近づく", "▶ 立ち止まる"]
+      },
+      隠れる: {
+        bg: "images/bush.jpg",
+        text: "静かに身をひそめると、足音だけが近づいてきた。",
+        choices: ["▶ 様子を見る", "▶ 近づく"]
+      },
+      近づく: {
+        bg: "images/light-close.jpg",
+        text: "光の正体は……ランタンを持った小さな少女だった。",
+        choices: ["▶ 話しかける", "▶ 無言で立ち去る"]
+      }
+    };
+
+    function changeScenario(key) {
+      if (!scenarios[key]) return;
+      history.pushState({ scenario: key }, "", "#" + key);
+      renderScenario(key);
+    }
+
+    function renderScenario(key) {
+      const scenario = scenarios[key];
+      document.getElementById("background").src = scenario.bg;
+      document.getElementById("serif-text").textContent = scenario.text;
+
+      const choicesUl = document.getElementById("choices");
+      choicesUl.innerHTML = "";
+      scenario.choices.forEach(choice => {
+        const li = document.createElement("li");
+        li.textContent = choice;
+        li.onclick = () => changeScenario(choice.substring(2)); // "▶ "を除く
+        choicesUl.appendChild(li);
+      });
+
+      // 戻るボタンの表示制御（開始画面では非表示）
+      document.getElementById("back-button").style.display = (key === "開始") ? "none" : "block";
+    }
+
+    window.addEventListener("popstate", (event) => {
+      const key = event.state?.scenario || "開始";
+      renderScenario(key);
+    });
+
+    // 初期表示
+    window.addEventListener("DOMContentLoaded", () => {
+      const initial = location.hash.replace("#", "") || "開始";
+      history.replaceState({ scenario: initial }, "", "#" + initial);
+      renderScenario(initial);
+    });
+  </script>
+</body>
+</html>
