@@ -14,7 +14,7 @@ RPGやビジュアルノベル風ゲームによく登場する、
 
 ## 🧪 デモページ
 
-🔗 [実際のモックを体験する](https://tsushima-r.github.io/your-folder-name/)  
+🔗 [実際のモックを体験する](https://tsushima-r.github.io/irasutoya-mock-app/)  
 
 
 ---
@@ -45,3 +45,4 @@ RPGやビジュアルノベル風ゲームによく登場する、
 
 📁 [GitHubプロフィールページを見る](https://github.com/tsushima-r)  
 最新の制作物も随時更新しています。
+
