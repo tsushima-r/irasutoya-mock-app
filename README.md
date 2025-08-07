@@ -35,15 +35,21 @@ RPGやビジュアルノベル風ゲームによく登場する、
 
 
 ---
+## 🛠 他の作品もぜひご覧ください！
 
-## 📌 他のプロジェクトもぜひご覧ください！
 
-- 🐱 [猫ミーム格闘キャラ抽選器](https://github.com/tsushima-r/Meme-Fighter-Picker)
-- 💬 [アルバイト用連絡掲示板](https://github.com/tsushima-r/help-board)
+
+ - [カラーパズル](https://github.com/tsushima-r/puzzle.py)　
+  → Pythonを使ったミニゲームです。
+
+- [猫ミーム格闘キャラ抽選器 🐱🎮](https://github.com/tsushima-r/Meme-Fighter-Picker/tree/main)  
+  →ランダムでVSカードの抽選をします。
+
 
 ---
 
 📁 [GitHubプロフィールページを見る](https://github.com/tsushima-r)  
 最新の制作物も随時更新しています。
+
 
 
